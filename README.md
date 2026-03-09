@@ -32,7 +32,13 @@ The differentiator is the **AI-assisted workflow**: 8 Claude Code skills that ha
    # Then in the session:
    /personalize
    ```
-   This walks you through setting your name, interests, and seed MOCs.
+   This walks you through PARA concepts, sets your name and interests, and creates seed MOCs.
+
+4. **Take the tour:**
+   ```
+   /tour
+   ```
+   Hands-on walkthrough: capture a note, create content, process the inbox, and learn the daily workflow — all with your real vault.
 
 ## How It Works
 
