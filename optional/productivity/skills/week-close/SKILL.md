@@ -34,7 +34,7 @@ Find notes that may need archiving or attention:
 
 1. Use `git log` to find .md files in the vault root not modified in 30+ days
 2. Filter to only: `type: project`, or notes with `status: active`
-3. Exclude: `type: moc`, `type: resource`, `type: sr-deck`, `type: literature`, `type: review`, `Templates/`, `archive/`, `staging/`
+3. Exclude: `type: moc`, `type: resource`, `type: literature`, `type: review`, `Templates/`, `archive/`, `staging/`
 4. For each candidate, check if it's referenced in `Tasks.md` — if it has an active task, it's not stale
 
 Present findings:

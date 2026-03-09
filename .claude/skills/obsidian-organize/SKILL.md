@@ -89,7 +89,7 @@ tags:
 | Index of links to other notes | `moc` |
 | Quick thought, unstructured | `fleeting` |
 | Book/article/course summary | `review` or `literature` |
-| Flashcard content with `::` or `?` | `sr-deck` |
+| External tool, guide, or how-to | `resource` |
 
 ## Tag Validation
 

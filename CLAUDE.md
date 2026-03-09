@@ -40,7 +40,7 @@ archive/                # Completed/inactive file storage
 ## Note Types
 
 Set via `type:` frontmatter property:
-`atomic` | `project` | `daily` | `moc` | `fleeting` | `literature` | `review` | `sr-deck` | `resource`
+`atomic` | `project` | `daily` | `moc` | `fleeting` | `literature` | `review` | `resource`
 
 **Semantics** — these distinctions matter for routing:
 | Type | Meaning | Typical `up:` |
@@ -51,7 +51,6 @@ Set via `type:` frontmatter property:
 | `review` | **Your notes on external content** — summary, takeaways, reflection | Domain MOC |
 | `moc` | **Map of content** — navigation hub linking child notes | Parent MOC or PARA root |
 | `project` | **Active work** with a completion state | Projects or domain MOC |
-| `sr-deck` | **Spaced repetition flashcard deck** | Spaced Repetition MOC |
 
 See `Templates/` for canonical examples of each type.
 
@@ -106,7 +105,6 @@ _Your MOCs will appear here after running `/personalize` or `/vault-index`._
 |--------|---------|
 | obsidian-git | Auto-sync every 5 min (rebase strategy) |
 | dataview | Database queries over frontmatter properties |
-| spaced-repetition | Flashcard review with `::` and `?` separators |
 | breadcrumbs | Hierarchical navigation via typed links (`up`, `down`, `related`, `next`, `prev`). Trail view shows breadcrumb path in Reading View, Matrix View shows neighbors, codeblocks render child trees on MOCs. Implied edges auto-derive `down:` from `up:` links. |
 
 ## YAML Frontmatter Rules
@@ -210,7 +208,7 @@ See `Tag Taxonomy.md` for the canonical list of tags and their conventions.
 **Domain tags**: See `Tag Taxonomy.md` for the canonical list. Add your own during `/personalize`.
 
 **Note type tags** (should match `type:` frontmatter):
-`moc` | `project` | `atomic` | `review` | `literature` | `sr` | `flashcards` | `daily`
+`moc` | `project` | `atomic` | `review` | `literature` | `daily`
 
 ### Rules
 - Use hyphens for multi-word tags (`distributed-systems`), not camelCase or underscores
@@ -219,7 +217,6 @@ See `Tag Taxonomy.md` for the canonical list of tags and their conventions.
 
 ## File Naming
 
-- SR Decks: `Topic Name SR Deck.md` (no dash before SR)
 - Reviews: Keep original article/book title
 - Guides: `Tool Name - Setup Guide.md`
 - No special characters in filenames when possible

@@ -23,7 +23,7 @@ The differentiator is the **AI-assisted workflow**: 8 Claude Code skills that ha
 
 2. **Open in Obsidian:**
    - Open Obsidian → "Open folder as vault" → select the cloned directory
-   - Go to Settings → Community Plugins → enable `obsidian-git`, `breadcrumbs`, `dataview`, and `obsidian-spaced-repetition`
+   - Go to Settings → Community Plugins → enable `obsidian-git`, `breadcrumbs`, and `dataview`
    - You may need to install each plugin first from the Community Plugins browser
 
 3. **Personalize with Claude Code:**
@@ -69,7 +69,6 @@ Home
 │   ├── Machine Learning (MOC)
 │   │   ├── Attention Is All You Need (review)
 │   │   ├── Gradient Descent (atomic)
-│   │   └── ML Concepts SR Deck (flashcards)
 │   ├── Cooking (MOC)
 │   └── ...
 └── Archives (done/inactive)
@@ -91,11 +90,10 @@ Each arrow is an `up:` link in frontmatter. Breadcrumbs shows the trail at the t
 
 | Skill | What it does |
 |-------|-------------|
-| `/obsidian-read` | Extract URL content → literature note + review note + optional flashcards |
+| `/obsidian-read` | Extract URL content → literature note + review note |
 | `/obsidian-organize` | Add frontmatter, detect note types, create relationships |
 | `/obsidian-migrate` | Process staging inbox, chunk large files, bulk reorganize |
 | `/obsidian-review` | Create review/literature notes from articles and books |
-| `/obsidian-flashcards` | Create spaced repetition decks for the SR plugin |
 
 ### Setup
 
@@ -134,8 +132,20 @@ claude mcp add --transport http notion https://mcp.notion.com/mcp
 | Platform | Method |
 |----------|--------|
 | **Desktop** | obsidian-git plugin (included, auto-syncs every 5 min) |
-| **Headless/server** | `obsidian-sync` CLI — `uv tool install obsidian-sync` |
+| **Headless/server** | [obsidian-sync](https://github.com/safurrier/obsidian-sync) CLI |
 | **iOS** | [Working Copy](https://workingcopy.app/) git client |
+
+**Headless sync (servers, NAS, CI):**
+- Install: `uv tool install obsidian-sync` (or `pipx install obsidian-sync`)
+- Configure: `obsidian-sync config`
+- Run: `obsidian-sync start`
+- See [obsidian-sync](https://github.com/safurrier/obsidian-sync) for full documentation, service setup (macOS launchd, Linux systemd), and configuration options.
+
+**iOS (Working Copy):**
+- Install [Working Copy](https://workingcopy.app/) on iOS
+- Clone your vault repo in Working Copy
+- Set up Obsidian to use the Working Copy folder
+- See [Troubleshooting Obsidian iOS Git Sync with Working Copy](https://github.com/safurrier/obsidian-ai-vault/wiki/iOS-Sync-Troubleshooting) for detailed setup and common issues
 
 ## Customization
 

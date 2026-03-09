@@ -1,6 +1,6 @@
 ---
 name: obsidian-read
-description: Extract URL content and create literature notes, review notes, and SR decks from web articles
+description: Extract URL content and create literature notes and review notes from web articles
 activation:
   - read url
   - read article
@@ -9,12 +9,11 @@ activation:
   - process reading list
   - to read later
   - reading pipeline
-  - article to flashcards
 ---
 
 # Obsidian Reading Pipeline
 
-Extract content from URLs and create properly linked vault notes, review notes, and SR decks.
+Extract content from URLs and create properly linked vault notes and review notes.
 
 ## Extraction Script
 
@@ -88,19 +87,8 @@ Fallback chain: Jina Reader (primary, ~0.3s) → Wayback Machine (archived snaps
    > **Important:** `up:` points to the domain MOC (e.g., Machine Learning, Generative AI Resources), NOT a generic "Reviews MOC" or "Sources MOC". See `obsidian-review` skill.
    > **Important:** Only the review note gets added to the MOC. The full text note stays out of MOC listings — it's discoverable via the `full-text:` property and the `full-text` tag.
 
-7. **Offer SR deck creation** with sizing estimate based on word count:
-
-   | Source Length | Cards | Strategy |
-   |-------------|-------|----------|
-   | Short (<1500 words) | 5-8 | Core concepts only |
-   | Medium (1500-4000 words) | 10-15 | Standard coverage |
-   | Long/complex (4000+ words) | 15-25 | Split into sub-deck sections |
-
-   Follow `obsidian-flashcards` skill for formatting, `resources/card-design.md` for card type selection (Factual, Lists, Conceptual, Procedural, Open Lists, Salience Prompts).
-
-8. **Validate deck** with `validate_cards.py` if SR deck was created
-9. **Update parent MOC** — add link to review note in the appropriate section (not the full text note)
-10. **Update reading list** — if URL was sourced from `staging/To Read Later.md`:
+7. **Update parent MOC** — add link to review note in the appropriate section (not the full text note)
+8. **Update reading list** — if URL was sourced from `staging/To Read Later.md`:
    - Remove the URL from `staging/To Read Later.md`
    - Add a checkbox entry to `To Read Later.md` under `## Unread`: `- [ ] [[Note Title]] — 1-line description`
    - When the user marks an item `[x]`, move it to the `## Read` section
@@ -111,7 +99,7 @@ Fallback chain: Jina Reader (primary, ~0.3s) → Wayback Machine (archived snaps
 2. **Present numbered URL list** with any annotations found in the file
 3. **User selects** which URLs to process (numbers or "all")
 4. **Extract sequentially** — respect rate limits, pause 1-2s between requests
-5. **For each URL**, follow Single URL Mode steps 2-9
+5. **For each URL**, follow Single URL Mode steps 2-8
 6. **Batch summary** at the end: what was created, what failed, what remains in `staging/To Read Later.md`
 
 ## Two-File Reading List
@@ -142,7 +130,6 @@ The extraction script automatically:
 ## Cross-Skill References
 
 - **`obsidian-review`** — note type selection (review vs literature), frontmatter templates
-- **`obsidian-flashcards`** — deck creation, formatting rules (`::` vs `?`), validation script, card design guidance in `resources/card-design.md`
 - **`obsidian-organize`** — frontmatter validation (`validate_frontmatter.py`)
 
 ## Error Handling

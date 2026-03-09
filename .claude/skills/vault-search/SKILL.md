@@ -60,10 +60,10 @@ grep pattern: 'up: "\[\[Machine Learning\]\]"' across all *.md files
 
 ### 3. Search by Type
 
-"show all sr-deck notes"
+"show all review notes"
 
 ```
-grep pattern: "^type: sr-deck$" across all *.md files
+grep pattern: "^type: review$" across all *.md files
 ```
 
 - Return: filename, parent MOC, tags
