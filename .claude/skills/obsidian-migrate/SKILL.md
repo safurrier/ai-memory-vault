@@ -94,7 +94,7 @@ When routing to backlogs or tasks, also consider whether a new `## Projects` ent
 3. **Add frontmatter** — via targeted edit after moving (never read+write the whole file)
 4. **Create new MOCs/sections** — if the plan calls for new structure, create it
 5. **Update parent MOCs** — add link in the appropriate MOC section
-6. **Create supporting artifacts** — e.g. "To Flashcard List" entries for high-quality notes
+6. **Create supporting artifacts** — e.g. cross-links, backlog entries for high-quality notes
 
 ### Phase 3: Verify
 

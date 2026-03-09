@@ -85,4 +85,4 @@ Rules:
 4. **Preserve original content** — never rewrite or paraphrase
 5. **Clean up URLs** if from Notion (follow rules above)
 6. **Update parent MOC** — add link in the domain MOC (e.g., Machine Learning, Generative AI Resources)
-7. **Ask about flashcards** — offer to create SR deck from key concepts (see obsidian-flashcards skill)
+7. **Update parent MOC** — add link in the domain MOC

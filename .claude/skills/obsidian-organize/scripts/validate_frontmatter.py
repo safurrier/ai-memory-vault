@@ -37,7 +37,6 @@ REQUIRED_FIELDS = {
     "fleeting": ["type", "created", "tags"],
     "literature": ["type", "source", "created", "up", "tags"],
     "review": ["type", "created", "up", "tags"],
-    "sr-deck": ["type", "source", "created", "up", "tags"],
     "resource": ["type", "tags"],
 }
 
