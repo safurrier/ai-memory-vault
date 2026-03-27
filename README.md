@@ -12,14 +12,27 @@ A starter kit for a personal knowledge management vault that uses:
 
 The differentiator is the **AI-assisted workflow**: 8 Claude Code skills that handle the tedious parts of knowledge management — frontmatter validation, content extraction, MOC maintenance, and vault health monitoring.
 
+### Why plain text?
+
+At its core, this is just a folder of markdown files. That's the whole point. You can open it in any text editor, search it with `grep`, back it up by copying the folder. Obsidian gives you a nice UI and wiki-style linking. Git sync lets you version and share across devices. The Claude Code skills automate the bookkeeping. But none of those layers are required — the vault works as plain files on disk, and you can adopt the extras incrementally (or not at all).
+
 ## Quick Start
 
-1. **Fork and clone:**
+1. **Get a copy** (pick one):
+
+   **GitHub template** (recommended) — click "Use this template" on the repo page. This creates a fresh repo under your account with no history and no link back to upstream.
+
+   **Download ZIP** — click Code → Download ZIP, unzip wherever you want your vault.
+
+   **Manual clone** (if you want git from the start):
    ```bash
-   # Fork this repo on GitHub, then:
-   git clone git@github.com:YOUR_USERNAME/obsidian-ai-vault.git
-   cd obsidian-ai-vault
+   # Create a fresh repo with no upstream history
+   git clone --depth 1 https://github.com/safurrier/obsidian-ai-vault.git my-vault
+   cd my-vault
+   rm -rf .git && git init && git add -A && git commit -m "init vault"
    ```
+
+   > **Don't fork this repo** unless you plan to contribute back. Forking keeps the full commit history and a visible link to upstream — not what you want for a personal vault.
 
 2. **Open in Obsidian:**
    - Open Obsidian → "Open folder as vault" → select the cloned directory
@@ -134,6 +147,8 @@ claude mcp add --transport http notion https://mcp.notion.com/mcp
 ```
 
 ### Sync Setup
+
+Sync is entirely optional. The vault works fine as a local folder — add sync later if you want it on multiple devices.
 
 | Platform | Method |
 |----------|--------|
