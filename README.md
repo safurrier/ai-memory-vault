@@ -27,9 +27,9 @@ At its core, this is just a folder of markdown files. That's the whole point. Yo
    **Manual clone** (if you want git from the start):
    ```bash
    # Create a fresh repo with no upstream history
-   git clone --depth 1 https://github.com/safurrier/obsidian-ai-vault.git my-vault
-   cd my-vault
-   rm -rf .git && git init && git add -A && git commit -m "init vault"
+   git clone --depth 1 https://github.com/safurrier/obsidian-ai-vault.git my-vault \
+     && cd my-vault \
+     && rm -rf .git && git init && git add -A && git commit -m "init vault"
    ```
 
    > **Don't fork this repo** unless you plan to contribute back. Forking keeps the full commit history and a visible link to upstream — not what you want for a personal vault.
