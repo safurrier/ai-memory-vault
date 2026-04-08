@@ -1,4 +1,4 @@
-# Obsidian AI Vault
+# AI Memory Vault
 
 A PARA-based Obsidian vault with AI-assisted workflows powered by Claude Code.
 
@@ -27,7 +27,7 @@ At its core, this is just a folder of markdown files. That's the whole point. Yo
    **Manual clone** (if you want git from the start):
    ```bash
    # Create a fresh repo with no upstream history
-   git clone --depth 1 https://github.com/safurrier/obsidian-ai-vault.git my-vault \
+   git clone --depth 1 https://github.com/safurrier/ai-memory-vault.git my-vault \
      && cd my-vault \
      && rm -rf .git && git init && git add -A && git commit -m "init vault"
    ```
@@ -166,7 +166,7 @@ Sync is entirely optional. The vault works fine as a local folder — add sync l
 - Install [Working Copy](https://workingcopy.app/) on iOS
 - Clone your vault repo in Working Copy
 - Set up Obsidian to use the Working Copy folder
-- See [Troubleshooting Obsidian iOS Git Sync with Working Copy](https://github.com/safurrier/obsidian-ai-vault/wiki/iOS-Sync-Troubleshooting) for detailed setup and common issues
+- See [Troubleshooting Obsidian iOS Git Sync with Working Copy](https://github.com/safurrier/ai-memory-vault/wiki/iOS-Sync-Troubleshooting) for detailed setup and common issues
 
 ## Customization
 
