@@ -26,7 +26,7 @@ Review from the beginning. No file needed.
 **Past session:** If given a JSONL path, parse it:
 
 ```bash
-ls -t ~/.claude/projects/**/*.jsonl 2>/dev/null | head -10
+find ~/.claude/projects -name '*.jsonl' -type f | xargs ls -t 2>/dev/null | head -10
 ```
 
 Read the session file and extract conversation turns. Claude Code JSONL format has two possible schemas — accept both:
