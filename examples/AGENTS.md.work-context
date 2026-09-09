@@ -1,0 +1,52 @@
+## Work Context
+
+_This is an example of a filled-in work context section. Copy this pattern into your canonical `AGENTS.md` after running `/personalize`._
+
+### Me
+Jordan Kim, Senior Software Engineer on the Platform team at Acme Corp.
+
+### Central MOCs
+
+| MOC | Domain | Notes |
+|-----|--------|-------|
+| `Web Development.md` | Frontend, React, CSS | Largest MOC |
+| `DevOps.md` | CI/CD, Docker, Kubernetes | |
+| `System Design.md` | Architecture, distributed systems | |
+| `Cooking.md` | Recipes, techniques | Personal interest |
+| `Fitness.md` | Workouts, nutrition | Personal interest |
+
+### People
+
+| Who | Role |
+|-----|------|
+| **Sarah** | Engineering Manager, 1:1 Tuesdays |
+| **Mike** | Tech Lead, architecture decisions |
+| **Lisa** | PM for Platform team |
+
+### Projects
+
+| Name | What |
+|------|------|
+| **API Gateway v2** | Migrating to new gateway with rate limiting |
+| **Observability** | Adding distributed tracing across services |
+
+### Weekly Rhythm
+- **Monday**: Team standup, sprint planning
+- **Friday**: Retro, weekly review
+
+## Productivity System
+
+_This section documents the task management system (added when productivity module is enabled)._
+
+### Task Tracking
+- **`Tasks.md`** — work tasks using Eisenhower matrix
+- **`Personal Tasks.md`** — personal tasks using Now / Later / Done
+
+### Weekly Workflow Skills
+- **`/week-start`** — Monday: reprioritize matrix, pick #1 thing
+- **`/week-close`** — Friday: weekly review, retro, reset
+- **`/weekly-status`** — generate exec-level status updates
+
+### Working Notes
+- Project-based, not daily notes (e.g. `API Gateway v2 Working Notes.md`)
+- Use `type: project` frontmatter

@@ -1,210 +1,77 @@
 # AI Memory Vault
 
-A PARA-based Obsidian vault with AI-assisted workflows powered by Claude Code.
+A plain-text Obsidian vault built around Projects, Areas, Resources, and Archives (PARA). Claude Code skills organize notes without losing their source or meaning. Open it in Obsidian or a text editor. The automation is optional.
 
-## What is this?
+## Start with Claude Code
 
-A starter kit for a personal knowledge management vault that uses:
+Claude Code is the primary beginner path. For a synced personal vault, use GitHub's **Use this template** button and choose **Private**, then clone your new repository—not this public template. A template copy has fresh history and no upstream publishing relationship. You can also download the ZIP for a local-only start.
 
-- **[PARA method](https://fortelabs.com/blog/para/)** — Projects, Areas, Resources, Archives for organizing everything
-- **Frontmatter-driven organization** — YAML properties (`up:`, `related:`, `tags:`) create hierarchy and cross-references, not folders
-- **Claude Code skills** — AI workflows that maintain your vault, create structured content from URLs, run weekly reviews, and keep everything connected
+With GitHub CLI, the equivalent flow creates a private template-based repository and clones it. The first command verifies which account will own the new repository; the second creates an external GitHub repository, so review its name before running it.
 
-The differentiator is the **AI-assisted workflow**: 8 Claude Code skills that handle the tedious parts of knowledge management — frontmatter validation, content extraction, MOC maintenance, and vault health monitoring.
+```bash
+gh auth status
+gh repo create my-ai-memory-vault --private \
+  --template safurrier/ai-memory-vault --clone
+cd my-ai-memory-vault
+```
 
-### Why plain text?
+Open that folder as an Obsidian vault. The included configuration lists Breadcrumbs, Dataview, and Obsidian Git. Plugin installation and sync are optional. The vault works as local Markdown without either.
 
-At its core, this is just a folder of markdown files. That's the whole point. You can open it in any text editor, search it with `grep`, back it up by copying the folder. Obsidian gives you a nice UI and wiki-style linking. Git sync lets you version and share across devices. The Claude Code skills automate the bookkeeping. But none of those layers are required — the vault works as plain files on disk, and you can adopt the extras incrementally (or not at all).
+```bash
+claude
+# In the Claude Code session:
+/personalize
+```
 
-## Quick Start
+`/personalize` explains the four categories, proposes a small starter structure, and waits for approval before writing. It can ask whether to inspect existing sources. The read-only exploration samples selected files. It skips secrets, binaries, dependencies, build output, and large files by default. It then suggests a staged migration for discussion and never bulk-imports a collection.
 
-1. **Get a copy** (pick one):
+After setup, run `/tour` for a hands-on workflow. Capture quick thoughts in `staging/Inbox.md`. Put URLs in `staging/To Read Later.md`. Use `/obsidian-migrate` only after it presents a batch plan and you approve it.
 
-   **GitHub template** (recommended) — click "Use this template" on the repo page. This creates a fresh repo under your account with no history and no link back to upstream.
+## How the vault works
 
-   **Download ZIP** — click Code → Download ZIP, unzip wherever you want your vault.
-
-   **Manual clone** (if you want git from the start):
-   ```bash
-   # Create a fresh repo with no upstream history
-   git clone --depth 1 https://github.com/safurrier/ai-memory-vault.git my-vault \
-     && cd my-vault \
-     && rm -rf .git && git init && git add -A && git commit -m "init vault"
-   ```
-
-   > **Don't fork this repo** unless you plan to contribute back. Forking keeps the full commit history and a visible link to upstream — not what you want for a personal vault.
-
-2. **Open in Obsidian:**
-   - Open Obsidian → "Open folder as vault" → select the cloned directory
-   - Go to Settings → Community Plugins → enable `obsidian-git`, `breadcrumbs`, and `dataview`
-   - You may need to install each plugin first from the Community Plugins browser
-
-3. **Personalize with Claude Code:**
-   ```bash
-   claude
-   # Then in the session:
-   /personalize
-   ```
-   This walks you through PARA concepts, sets your name and interests, and creates seed MOCs.
-
-4. **Take the tour:**
-   ```
-   /tour
-   ```
-   Hands-on walkthrough: capture a note, create content, process the inbox, and learn the daily workflow — all with your real vault.
-
-## How It Works
-
-### PARA Structure
-
-Every note lives at the vault root (flat hierarchy). Organization is via frontmatter properties:
+The four categories separate **Projects** with finite outcomes, **Areas** with ongoing responsibilities, **Resources** with reference topics, and **Archives** with inactive material. Notes stay mostly flat. Their YAML frontmatter supplies parent and peer relationships instead of deep folders:
 
 ```yaml
 ---
 type: atomic
-up: "[[Machine Learning]]"
+up: "[[A topic MOC]]"
 related:
-  - "[[Transformers]]"
+  - "[[Another note]]"
 tags:
-  - machine-learning
-  - practitioner
+  - a-topic
 ---
 ```
 
-- **`up:`** creates parent-child hierarchy (Machine Learning → this note)
-- **`related:`** creates peer connections
-- **`tags:`** enable cross-cutting dataview queries
-- The [Breadcrumbs](https://github.com/SkepticMystic/breadcrumbs) plugin renders these as navigable trails
-
-### Named Links > Folders
-
-Instead of nested folders, relationships are explicit in frontmatter:
-
-```
-Home
-├── Projects (active work)
-├── Areas (ongoing responsibilities)
-├── Resources (reference material)
-│   ├── Machine Learning (MOC)
-│   │   ├── Attention Is All You Need (review)
-│   │   ├── Gradient Descent (atomic)
-│   ├── Cooking (MOC)
-│   └── ...
-└── Archives (done/inactive)
-```
-
-Each arrow is an `up:` link in frontmatter. Breadcrumbs shows the trail at the top of each note.
+MOCs are maps of content and act as navigation notes. `up:` creates a parent link, `related:` connects peers, and tags support filtering. Read [AGENTS.md](AGENTS.md) for the full frontmatter, media-safety, and preservation rules.
 
 ## Skills
 
-### Vault Maintenance
+Canonical skills live in `.agents/skills`. `.claude/skills` is a relative compatibility symlink so Claude Code discovers the same skills. On platforms or ZIP tools that do not preserve symlinks, recreate `.claude/skills -> ../.agents/skills` and `CLAUDE.md -> AGENTS.md`. Edit only the canonical paths.
 
-| Skill | What it does |
-|-------|-------------|
-| `/vault-index` | Generate a vault census — MOC registry, tag audit, orphan detection |
-| `/vault-audit` | Full PARA health check — stale projects, broken links, duplicates |
-| `/vault-search` | Structured search by tag, MOC, type, or relationship |
+| Skill | Purpose |
+|---|---|
+| `/personalize` | Propose a small personal starter structure and optional source discovery |
+| `/tour` | Walk through the first real workflow without surprise writes |
+| `/obsidian-migrate` | Propose and execute approved, bounded staging migrations |
+| `/obsidian-organize` | Propose minimal metadata and link repairs |
+| `/obsidian-read` | Create provenance-aware notes from accessible web content |
+| `/obsidian-review` | Create approved review or literature notes from supplied sources |
+| `/session-capture` | Propose durable session lessons before saving them |
+| `/vault-audit` | Report vault health before approved cleanup |
+| `/vault-index` | Regenerate deterministic Vault and Skills indexes |
+| `/vault-search` | Search structure and content with optional semantic discovery |
 
-### Content Creation
+The optional productivity module is in [`optional/productivity/`](optional/productivity/). Enable it through an approved `/personalize` plan or follow its [setup notes](optional/productivity/SETUP.md).
 
-| Skill | What it does |
-|-------|-------------|
-| `/obsidian-read` | Extract URL content → literature note + review note |
-| `/obsidian-organize` | Add frontmatter, detect note types, create relationships |
-| `/obsidian-migrate` | Process staging inbox, chunk large files, bulk reorganize |
-| `/obsidian-review` | Create review/literature notes from articles and books |
+## Validate a change
 
-### Setup
-
-| Skill | What it does |
-|-------|-------------|
-| `/personalize` | One-time setup wizard — name, domains, seed MOCs, productivity module |
-
-## Optional: Productivity Module
-
-The `optional/productivity/` directory contains a task management system with:
-
-- **Eisenhower matrix** for work tasks (Urgent+Important, Big Rocks, Not Now)
-- **Now / Later / Done** for personal tasks
-- **Daily routines** (`/daily-start`, `/daily-end`) with ASCII art and focus picking
-- **Weekly reviews** (`/week-start`, `/week-close`) with retro and stale note scanning
-- **Status updates** (`/weekly-status`) using the 5 Levels of Impact framework
-
-Enable it during `/personalize` or manually — see `optional/productivity/SETUP.md`.
-
-## Suggested Integrations
-
-### Communications Triage (Slack, Discord)
-Add the Slack or Discord MCP server to route messages into your vault:
-```bash
-claude mcp add slack -- npx -y @anthropic/mcp-slack
-```
-
-### Knowledge Base (Notion)
-Connect Notion as a knowledge source alongside your vault:
-```bash
-claude mcp add --transport http notion https://mcp.notion.com/mcp
-```
-
-### Sync Setup
-
-Sync is entirely optional. The vault works fine as a local folder — add sync later if you want it on multiple devices.
-
-| Platform | Method |
-|----------|--------|
-| **Desktop** | obsidian-git plugin (included, auto-syncs every 5 min) |
-| **Headless/server** | [obsidian-sync](https://github.com/safurrier/obsidian-sync) CLI |
-| **iOS** | [Working Copy](https://workingcopy.app/) git client |
-
-**Headless sync (servers, NAS, CI):**
-- Install: `uv tool install obsidian-sync` (or `pipx install obsidian-sync`)
-- Configure: `obsidian-sync config`
-- Run: `obsidian-sync start`
-- See [obsidian-sync](https://github.com/safurrier/obsidian-sync) for full documentation, service setup (macOS launchd, Linux systemd), and configuration options.
-
-**iOS (Working Copy):**
-- Install [Working Copy](https://workingcopy.app/) on iOS
-- Clone your vault repo in Working Copy
-- Set up Obsidian to use the Working Copy folder
-- See [Troubleshooting Obsidian iOS Git Sync with Working Copy](https://github.com/safurrier/ai-memory-vault/wiki/iOS-Sync-Troubleshooting) for detailed setup and common issues
-
-## Customization
-
-### Add your own skills
-
-Create `.claude/skills/your-skill/SKILL.md` with frontmatter:
-```yaml
----
-name: your-skill
-description: What it does
-activation:
-  - trigger phrase 1
-  - trigger phrase 2
----
-```
-
-See `examples/dev-kickoff/` for a complete example of a custom workflow skill.
-
-### Add MOCs and tags
-
-- Create MOC notes with `type: moc` and `up: "[[Resources]]"`
-- Add domain tags to `Tag Taxonomy.md`
-- Run `/vault-index` to update the census
-
-### Update work context
-
-After `/personalize`, the Work Context section in `CLAUDE.md` holds your personal info. Update it as your projects and team change. See `examples/CLAUDE.md.work-context` for a filled-in example.
-
-## Validation
-
-The vault includes validation scripts that check frontmatter formatting and link integrity:
+Run these commands from the vault root after changing note structure:
 
 ```bash
-# Check frontmatter (leading blanks, unquoted links, missing fields)
-uv run python .claude/skills/obsidian-organize/scripts/validate_frontmatter.py .
-
-# Check link integrity (broken up: targets, orphans, one-way links)
-uv run python .claude/skills/obsidian-organize/scripts/validate_links.py .
+uv run python .agents/skills/obsidian-organize/scripts/validate_frontmatter.py . --active-only --exclude README.md,AGENTS.md,CLAUDE.md
+uv run python .agents/skills/obsidian-organize/scripts/validate_links.py . --active-only --exclude README.md,AGENTS.md,CLAUDE.md
+uv run python -m unittest discover -s .agents/skills/obsidian-organize/scripts -p 'test_*.py'
+git diff --check
 ```
 
-These run automatically during `/vault-audit` and `/obsidian-organize`.
+`/vault-index` can refresh `Vault Index.md` and `Skills Index.md` after an approved structural change. Semantic search is optional and complements, rather than replaces, exhaustive text search.

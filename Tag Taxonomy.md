@@ -22,6 +22,12 @@ Canonical tag conventions for the vault. Use these exact forms — variants will
 | `draft` | Work in progress |
 | `full-text` | Full extracted article text (literature notes) |
 
+## Note type tags
+
+These tags mirror the note types commonly used in filtered views.
+
+`moc` | `project` | `atomic` | `review` | `literature` | `daily` | `fleeting` | `resource` | `area` | `archive` | `reference`
+
 ## Domain tags (add your own)
 
 Add domain tags relevant to your interests. Examples:
