@@ -1,12 +1,14 @@
 # AI Memory Vault
 
-A plain-text Obsidian vault built around Projects, Areas, Resources, and Archives (PARA). Its agent skills organize notes without losing their source or meaning, with Claude Code as the primary beginner path. Open it in Obsidian or a text editor. The automation is optional.
+A portable, plain-text memory system built around Projects, Areas, Resources, and Archives (PARA). Use it with a coding-agent harness, Obsidian, or any text editor. The Markdown vault works without plugins, sync, or automation.
 
-## Start with Claude Code
+## Quick start
 
-Claude Code is the primary beginner path. For a synced personal vault, use GitHub's **Use this template** button and choose **Private**, then clone your new repository—not this public template. A template copy has fresh history and no upstream publishing relationship. You can also download the ZIP for a local-only start.
+### Create your own vault
 
-With GitHub CLI, the equivalent flow creates a private template-based repository and clones it. The first command shows which account GitHub CLI uses. The second creates an external GitHub repository, so review its name before running it.
+Use GitHub's **Use this template** button, choose **Private**, and clone the new repository. Don't clone this public template as your personal vault. A template copy starts with fresh history and no upstream publishing relationship.
+
+The GitHub CLI flow is equivalent. `gh auth status` shows which account GitHub CLI uses. `gh repo create` creates an external private repository, so review the new name before running it.
 
 ```bash
 gh auth status
@@ -15,17 +17,44 @@ gh repo create my-ai-memory-vault --private \
 cd my-ai-memory-vault
 ```
 
-Open that folder as an Obsidian vault. The included configuration lists Breadcrumbs, Dataview, and Obsidian Git. Plugin installation and sync are optional. The vault works as local Markdown without either.
+For a local-only vault, download the ZIP instead.
 
-```bash
-claude
-# In the Claude Code session:
+### Personalize it with your agent harness
+
+Open the vault root in your harness of choice. The main instructions are in `AGENTS.md`, and reusable workflows are in `.agents/skills/`.
+
+If your harness supports slash skills, start with:
+
+```text
 /personalize
 ```
 
-`/personalize` explains the four categories, proposes a small starter structure, and waits for approval before writing. It can ask whether to inspect existing sources. The read-only exploration samples selected files. It skips secrets, binaries, dependencies, build output, and large files by default. It then suggests a staged migration for discussion and never bulk-imports a collection.
+Otherwise, ask it directly:
 
-After setup, run `/tour` for a hands-on workflow. Capture quick thoughts in `staging/Inbox.md`. Put URLs in `staging/To Read Later.md`. Use `/obsidian-migrate` only after it presents a batch plan and you approve it.
+```text
+Use .agents/skills/personalize/SKILL.md to personalize this vault.
+```
+
+`/personalize` asks about your role, topics, and optional productivity setup. It proposes a small starter structure and waits for approval before changing files.
+
+### Take the tour
+
+After personalization, run `/tour` or ask your harness to use `.agents/skills/tour/SKILL.md`. The tour walks through capture, links, URL reading, and health checks without surprise writes.
+
+Open the folder as an Obsidian vault whenever you want the graphical interface. Breadcrumbs, Dataview, Obsidian Git, and sync are optional.
+
+## Bring in existing notes
+
+The vault has no bulk `/ingest` command. This is intentional. Existing context moves through a reviewable migration flow:
+
+1. During `/personalize`, identify the source folders you want explored.
+2. The agent inspects only those sources, read-only. It skips secrets, dependencies, build output, binaries, and large files by default.
+3. Review its proposed first batch, destinations, duplicate checks, and exclusions.
+4. Approve a specific small batch, then use `/obsidian-migrate` to move it without rewriting the source material.
+
+Source discovery doesn't authorize migration. Move large collections through several approved batches instead of importing everything at once.
+
+For day-to-day capture, put quick thoughts in `staging/Inbox.md` and URLs in `staging/To Read Later.md`.
 
 ## How the vault works
 
