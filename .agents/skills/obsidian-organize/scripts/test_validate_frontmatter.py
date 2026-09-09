@@ -51,6 +51,10 @@ class RequiredTagsTests(unittest.TestCase):
         issues = self.check_note("tags:\n  - productivity")
         self.assertIn("type-tag-mismatch", [issue.rule for issue in issues])
 
+    def test_tags_cannot_include_a_conflicting_note_type(self):
+        issues = self.check_note("tags:\n  - atomic\n  - archive")
+        self.assertIn("conflicting-type-tag", [issue.rule for issue in issues])
+
     def test_bad_indentation_is_not_accepted(self):
         issues = self.check_note("tags:\n- atomic")
         self.assertIn("list-indent", [issue.rule for issue in issues])

@@ -3,7 +3,6 @@ type: moc
 up: "[[Home]]"
 tags:
   - moc
-  - archive
 ---
 
 Completed or inactive items. Archived notes live in the `archive/` directory.

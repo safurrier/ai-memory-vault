@@ -97,6 +97,15 @@ def extract_wikilinks(text: str) -> list[str]:
     return [link.strip() for link in links]
 
 
+def get_fm_value(fm_text: str, field_name: str) -> str | None:
+    """Return the inline value for a frontmatter field, or None when absent."""
+    for line in fm_text.split("\n"):
+        match = re.match(rf"^{re.escape(field_name)}\s*:\s*(.*)", line)
+        if match:
+            return match.group(1).strip()
+    return None
+
+
 def get_fm_links(fm_text: str, field_name: str) -> list[str]:
     """Extract wiki links from a specific frontmatter field."""
     links = []
@@ -221,6 +230,7 @@ def main():
         prev_targets = get_fm_links(fm_text, "prev") if fm_text else []
         next_targets = get_fm_links(fm_text, "next") if fm_text else []
         source_targets = get_fm_links(fm_text, "source") if fm_text else []
+        full_text_value = get_fm_value(fm_text, "full-text") if fm_text else None
         full_text_targets = get_fm_links(fm_text, "full-text") if fm_text else []
         body_links = get_body_links(content)
 
@@ -230,6 +240,7 @@ def main():
             "prev_targets": prev_targets,
             "next_targets": next_targets,
             "source_targets": source_targets,
+            "full_text_value": full_text_value,
             "full_text_targets": full_text_targets,
             "body_links": body_links,
             "fm_text": fm_text,
@@ -314,18 +325,24 @@ def main():
                                 f'source: "[[{target}]]" — file does not exist')
 
             # --- Check: full-text: provenance links ---
-            if data["full_text_targets"] and data["note_type"] != "review":
-                report.add(rel, "error", "invalid-full-text-owner",
-                            "full-text: is only valid on type: review notes")
-            for target in data["full_text_targets"]:
-                if target not in all_notes:
-                    report.add(rel, "error", "broken-full-text",
-                                f'full-text: "[[{target}]]" — file does not exist')
-                    continue
-                target_data = note_data_by_stem.get(target)
-                if not target_data or target_data["note_type"] != "literature":
-                    report.add(rel, "error", "invalid-full-text-target",
-                                f'full-text: "[[{target}]]" — target must be type: literature')
+            if data["full_text_value"] is not None:
+                targets = data["full_text_targets"]
+                if len(targets) != 1:
+                    report.add(rel, "error", "malformed-full-text",
+                                "full-text: must contain exactly one wiki link")
+                else:
+                    target = targets[0]
+                    if data["note_type"] != "review":
+                        report.add(rel, "error", "invalid-full-text-owner",
+                                    "full-text: is only valid on type: review notes")
+                    if target not in all_notes:
+                        report.add(rel, "error", "broken-full-text",
+                                    f'full-text: "[[{target}]]" — file does not exist')
+                    else:
+                        target_data = note_data_by_stem.get(target)
+                        if not target_data or target_data["note_type"] != "literature":
+                            report.add(rel, "error", "invalid-full-text-target",
+                                        f'full-text: "[[{target}]]" — target must be type: literature')
 
     report.print_summary()
     sys.exit(1 if any(i.severity == "error" for i in report.issues) else 0)

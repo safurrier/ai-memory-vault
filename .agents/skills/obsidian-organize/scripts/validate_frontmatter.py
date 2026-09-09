@@ -242,6 +242,10 @@ def check_file(filepath: Path, vault_root: Path, report: Report, all_stems: set[
             if tags and clean_type not in tags:
                 report.add(rel, fm_start, "warning", "type-tag-mismatch",
                             f"type={clean_type} requires matching tag: {clean_type}")
+            conflicting_types = sorted((tags & set(REQUIRED_FIELDS)) - {clean_type})
+            if conflicting_types:
+                report.add(rel, fm_start, "warning", "conflicting-type-tag",
+                            f"type={clean_type} has conflicting type tag(s): {', '.join(conflicting_types)}")
 
     # --- Check: H1 duplicating filename ---
     stem = filepath.stem

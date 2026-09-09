@@ -34,6 +34,20 @@ Review notes.
             encoding="utf-8",
         )
 
+    def test_malformed_full_text_value_is_an_error(self):
+        with tempfile.TemporaryDirectory() as directory:
+            vault = Path(directory)
+            (vault / "Home.md").write_text("# Home\n", encoding="utf-8")
+            (vault / "Review.md").write_text(
+                "---\ntype: review\ncreated: 2026-09-09\nup: \"[[Home]]\"\nfull-text: Literature\ntags:\n  - review\n---\n",
+                encoding="utf-8",
+            )
+
+            result = self.run_validator(vault)
+
+            self.assertEqual(result.returncode, 1)
+            self.assertIn("[malformed-full-text]", result.stdout)
+
     def test_broken_full_text_link_is_an_error(self):
         with tempfile.TemporaryDirectory() as directory:
             vault = Path(directory)

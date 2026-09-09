@@ -62,7 +62,6 @@ None detected.
 
 | Tag | Count |
 | --- | --- |
-| `archive` | 1 |
 | `moc` | 7 |
 | `reference` | 1 |
 | `resource` | 1 |

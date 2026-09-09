@@ -1,12 +1,12 @@
 # AI Memory Vault
 
-A plain-text Obsidian vault built around Projects, Areas, Resources, and Archives (PARA). Claude Code skills organize notes without losing their source or meaning. Open it in Obsidian or a text editor. The automation is optional.
+A plain-text Obsidian vault built around Projects, Areas, Resources, and Archives (PARA). Its agent skills organize notes without losing their source or meaning, with Claude Code as the primary beginner path. Open it in Obsidian or a text editor. The automation is optional.
 
 ## Start with Claude Code
 
 Claude Code is the primary beginner path. For a synced personal vault, use GitHub's **Use this template** button and choose **Private**, then clone your new repository—not this public template. A template copy has fresh history and no upstream publishing relationship. You can also download the ZIP for a local-only start.
 
-With GitHub CLI, the equivalent flow creates a private template-based repository and clones it. The first command verifies which account will own the new repository; the second creates an external GitHub repository, so review its name before running it.
+With GitHub CLI, the equivalent flow creates a private template-based repository and clones it. The first command shows which account GitHub CLI uses. The second creates an external GitHub repository, so review its name before running it.
 
 ```bash
 gh auth status
@@ -34,10 +34,12 @@ The four categories separate **Projects** with finite outcomes, **Areas** with o
 ```yaml
 ---
 type: atomic
+created: YYYY-MM-DD
 up: "[[A topic MOC]]"
 related:
   - "[[Another note]]"
 tags:
+  - atomic
   - a-topic
 ---
 ```
@@ -46,7 +48,7 @@ MOCs are maps of content and act as navigation notes. `up:` creates a parent lin
 
 ## Skills
 
-Canonical skills live in `.agents/skills`. `.claude/skills` is a relative compatibility symlink so Claude Code discovers the same skills. On platforms or ZIP tools that do not preserve symlinks, recreate `.claude/skills -> ../.agents/skills` and `CLAUDE.md -> AGENTS.md`. Edit only the canonical paths.
+Canonical skills live in `.agents/skills`. `.claude/skills` is a relative compatibility symlink so Claude Code discovers the same skills. On platforms or ZIP tools that don't preserve symlinks, recreate `.claude/skills -> ../.agents/skills` and `CLAUDE.md -> AGENTS.md`. Edit only the canonical paths.
 
 | Skill | Purpose |
 |---|---|
@@ -70,8 +72,10 @@ Run these commands from the vault root after changing note structure:
 ```bash
 uv run python .agents/skills/obsidian-organize/scripts/validate_frontmatter.py . --active-only --exclude README.md,AGENTS.md,CLAUDE.md
 uv run python .agents/skills/obsidian-organize/scripts/validate_links.py . --active-only --exclude README.md,AGENTS.md,CLAUDE.md
+uv run python -m unittest discover -s .agents/skills/obsidian-read/scripts -p 'test_*.py'
 uv run python -m unittest discover -s .agents/skills/obsidian-organize/scripts -p 'test_*.py'
+uv run --no-project --with pyyaml python -m unittest discover -s .agents/skills/vault-index/scripts -p 'test_*.py'
 git diff --check
 ```
 
-`/vault-index` can refresh `Vault Index.md` and `Skills Index.md` after an approved structural change. Semantic search is optional and complements, rather than replaces, exhaustive text search.
+The validators print a pass summary when the active notes are consistent. `/vault-index` can then refresh `Vault Index.md` and `Skills Index.md` after an approved structural change. Semantic search is optional and complements, rather than replaces, exhaustive text search.
