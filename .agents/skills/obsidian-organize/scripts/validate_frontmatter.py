@@ -127,8 +127,9 @@ def get_fm_field(fm_text: str, field_name: str) -> str | None:
     return None
 
 
-def has_block_list_value(fm_text: str, field_name: str) -> bool:
-    """Recognize populated, two-space-indented lists without consuming the next field."""
+def get_block_list_values(fm_text: str, field_name: str) -> list[str]:
+    """Read populated, two-space-indented list values without consuming the next field."""
+    values = []
     in_field = False
     for line in fm_text.splitlines():
         if not in_field:
@@ -143,8 +144,13 @@ def has_block_list_value(fm_text: str, field_name: str) -> bool:
         if line.startswith("  - "):
             item = line[4:].strip()
             if item and not item.startswith("#"):
-                return True
-    return False
+                values.append(item.strip("\"'"))
+    return values
+
+
+def has_block_list_value(fm_text: str, field_name: str) -> bool:
+    """Recognize whether a two-space-indented list has a value."""
+    return bool(get_block_list_values(fm_text, field_name))
 
 
 def check_file(filepath: Path, vault_root: Path, report: Report, all_stems: set[str] | None = None):
@@ -231,6 +237,11 @@ def check_file(filepath: Path, vault_root: Path, report: Report, all_stems: set[
             if (value is None or value == "") and not populated_tags:
                 report.add(rel, fm_start, "warning", "missing-field",
                             f"type={clean_type} missing recommended field: {req_field}")
+        if "tags" in required:
+            tags = {tag.lstrip("#") for tag in get_block_list_values(fm_text, "tags")}
+            if tags and clean_type not in tags:
+                report.add(rel, fm_start, "warning", "type-tag-mismatch",
+                            f"type={clean_type} requires matching tag: {clean_type}")
 
     # --- Check: H1 duplicating filename ---
     stem = filepath.stem

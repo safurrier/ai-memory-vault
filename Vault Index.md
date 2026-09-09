@@ -65,6 +65,7 @@ None detected.
 | `archive` | 1 |
 | `moc` | 7 |
 | `reference` | 1 |
+| `resource` | 1 |
 
 ### Other Tags (3+ uses)
 

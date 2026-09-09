@@ -2,6 +2,7 @@
 type: resource
 up: "[[Home]]"
 tags:
+  - resource
   - meta
 ---
 

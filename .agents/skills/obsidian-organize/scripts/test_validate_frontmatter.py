@@ -47,6 +47,10 @@ class RequiredTagsTests(unittest.TestCase):
                 issues = self.check_note(fields)
                 self.assertIn("missing-field", [issue.rule for issue in issues])
 
+    def test_tags_must_include_the_note_type(self):
+        issues = self.check_note("tags:\n  - productivity")
+        self.assertIn("type-tag-mismatch", [issue.rule for issue in issues])
+
     def test_bad_indentation_is_not_accepted(self):
         issues = self.check_note("tags:\n- atomic")
         self.assertIn("list-indent", [issue.rule for issue in issues])
