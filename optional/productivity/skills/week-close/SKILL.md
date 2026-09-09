@@ -90,6 +90,7 @@ type: review
 created: YYYY-MM-DD
 up: "[[Home]]"
 tags:
+  - review
   - weekly-review
   - retro
 ---

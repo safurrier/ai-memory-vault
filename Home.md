@@ -17,7 +17,11 @@ depth: -2
 - [[Areas]] — Ongoing responsibilities
 - [[Resources]] — Reference materials by topic
 - [[Archives]] — Completed or inactive items
+- [[Tag Taxonomy]] — Canonical tag conventions
 
 ## Quick Access
 - [[staging/Inbox]] — Quick capture scratchpad
 - [[staging/To Read Later]] — URL inbox
+- [[Vault Index]] — Generated vault census
+- [[Skills Index]] — Generated skill catalog
+- [[.obsidian-assistant-notes]] — Vault-specific migration reference

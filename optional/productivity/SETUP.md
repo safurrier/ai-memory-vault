@@ -32,7 +32,7 @@ Run `/personalize` and say "yes" when asked about the productivity module. It ha
 
 2. Copy skills to the skills directory:
    ```bash
-   cp -r optional/productivity/skills/* .claude/skills/
+   cp -r optional/productivity/skills/* .agents/skills/
    ```
 
 3. Add task links to Home.md (in the Quick Access section):
@@ -41,7 +41,7 @@ Run `/personalize` and say "yes" when asked about the productivity module. It ha
    - [[Personal Tasks]] — Personal tasks (Now / Later / Done)
    ```
 
-4. Add the Productivity System section to CLAUDE.md (see examples/CLAUDE.md.work-context for reference).
+4. Add the Productivity System section to AGENTS.md (see examples/AGENTS.md.work-context for reference).
 
 ## Task Conventions
 
