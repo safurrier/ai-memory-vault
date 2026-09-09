@@ -40,11 +40,12 @@ REQUIRED_FIELDS = {
     "resource": ["type", "tags"],
     "area": ["type", "created", "up", "tags"],
     "archive": ["type", "created", "up", "archived", "tags"],
-    "reference": ["type", "created", "up"],
+    "reference": ["type", "created", "up", "tags"],
 }
 
 SKIP_DIRS = {".obsidian", ".git", ".agents", ".claude", ".ai", ".pi", "Templates", "node_modules"}
 ACTIVE_EXCLUDE_DIRS = {".agents", ".ai", ".pi", "archive", "reports", "staging", "optional"}
+NON_NOTE_ROOT_FILES = {"README.md", "AGENTS.md", "CLAUDE.md"}
 
 REMOVED_PROPERTIES = {"supports", "opposes", "refines", "implements", "same"}
 
@@ -358,6 +359,8 @@ def main():
     for md_file in sorted(vault.rglob("*.md")):
         rel_parts = md_file.relative_to(vault).parts
         if any(part in SKIP_DIRS for part in rel_parts):
+            continue
+        if len(rel_parts) == 1 and md_file.name in NON_NOTE_ROOT_FILES:
             continue
         all_stems.add(md_file.stem)
         if should_skip_path(md_file, vault, root_only=args.root_only, active_only=args.active_only, excludes=excludes):

@@ -3,6 +3,8 @@
 Run: uv run python -m unittest discover -s .agents/skills/obsidian-organize/scripts -p 'test_*.py'
 """
 
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -49,6 +51,33 @@ class RequiredTagsTests(unittest.TestCase):
         issues = self.check_note("tags:\n- atomic")
         self.assertIn("list-indent", [issue.rule for issue in issues])
         self.assertIn("missing-field", [issue.rule for issue in issues])
+
+    def test_instruction_file_is_not_a_frontmatter_link_target(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "AGENTS.md").write_text("# Instructions\n", encoding="utf-8")
+            (root / "Example.md").write_text(
+                "---\ntype: reference\ncreated: 2026-09-09\nup: \"[[Home]]\"\nsource: \"[[AGENTS]]\"\ntags:\n  - reference\n---\n",
+                encoding="utf-8",
+            )
+            (root / "Home.md").write_text("# Home\n", encoding="utf-8")
+
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(Path(validator.__file__)),
+                    str(root),
+                    "--active-only",
+                    "--exclude",
+                    "README.md,AGENTS.md,CLAUDE.md",
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+
+            self.assertEqual(result.returncode, 0)
+            self.assertIn("broken-source", result.stdout)
 
 
 if __name__ == "__main__":

@@ -30,6 +30,7 @@ ACTIVE_EXCLUDE_DIRS = {".agents", ".ai", ".pi", "archive", "reports", "staging",
 
 # These files are top-level and don't need an up: property
 ROOT_NOTES = {"Home", "Projects", "Areas", "Resources", "Archives", "Welcome"}
+NON_NOTE_ROOT_FILES = {"README.md", "AGENTS.md", "CLAUDE.md"}
 
 
 @dataclass
@@ -195,7 +196,7 @@ def main():
         rel_parts = md_file.relative_to(vault).parts
         if any(part in SKIP_DIRS for part in rel_parts):
             continue
-        if excludes and any(part in excludes for part in rel_parts):
+        if len(rel_parts) == 1 and md_file.name in NON_NOTE_ROOT_FILES:
             continue
 
         stem = md_file.stem

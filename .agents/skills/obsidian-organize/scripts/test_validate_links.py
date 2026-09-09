@@ -151,6 +151,25 @@ Full text.
             self.assertEqual(result.returncode, 1)
             self.assertIn("[broken-up]", result.stdout)
 
+    def test_explicitly_excluded_note_directory_still_supplies_targets(self):
+        with tempfile.TemporaryDirectory() as directory:
+            vault = Path(directory)
+            archive = vault / "archive"
+            archive.mkdir()
+            (archive / "Past.md").write_text(
+                "---\ntype: archive\ncreated: 2026-09-09\nup: \"[[Archives]]\"\narchived: 2026-09-09\ntags:\n  - archive\n---\n",
+                encoding="utf-8",
+            )
+            (vault / "Note.md").write_text(
+                "---\ntype: atomic\ncreated: 2026-09-09\nup: \"[[Past]]\"\ntags:\n  - atomic\n---\n",
+                encoding="utf-8",
+            )
+
+            result = self.run_validator(vault, "--exclude", "archive")
+
+            self.assertEqual(result.returncode, 0)
+            self.assertNotIn("broken-up", result.stdout)
+
     def test_missing_parent_listing_is_reported_as_warning(self):
         with tempfile.TemporaryDirectory() as directory:
             vault = Path(directory)
